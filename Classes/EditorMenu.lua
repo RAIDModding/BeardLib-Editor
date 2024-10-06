@@ -29,12 +29,13 @@ function EditorMenu:init(load)
     end]]--
     RaidMenuHelper:MakeClbk("BeardLibEditorMenu", ClassClbk(self, "set_enabled", true))
 
-    RaidMenuHelper:InjectButtons("raid_menu_left_options", "network", {
-        {
-            text = managers.localization:text("BeardLibEditorMenu"),
-            callback = "BeardLibEditorMenu"
-        }
-    }, true)
+    -- implemented in RaidMainMenuGui now, as InjectButtons does not work properly for raid_menu_main
+    -- RaidMenuHelper:InjectButtons("raid_menu_main", "options", {
+    --     {
+    --         text = managers.localization:text("BeardLibEditorMenu"),
+    --         callback = "BeardLibEditorMenu"
+    --     }
+    -- }, true)
 end
 
 function EditorMenu:Load(data)

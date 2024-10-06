@@ -122,7 +122,6 @@
         <hook source_file="lib/managers/mission/elementspawncivilian" file="Fixes.lua"/>
         <hook source_file="lib/managers/mission/elementspawnenemydummy" file="Fixes.lua"/>
     	<hook source_file="core/lib/managers/mission/coreelementarea" file="Fixes.lua"/>
-        <hook source_file="lib/managers/missionassetsmanager" file="MissionAssetsManager.lua"/>
         <hook source_file="lib/setups/setup" file="Setup.lua"/>
         <hook source_file="lib/setups/gamesetup" file="GameSetup.lua"/>
         <hook source_file="lib/states/editorstate" file="EditorState.lua"/>
@@ -139,6 +138,7 @@
         <hook source_file="lib/managers/group_ai_states/groupaistatebase" file="GroupAIStateBase.lua"/>
         <hook source_file="lib/managers/mission/elementlookattrigger" file="ElementLookAtTrigger.lua"/>
         <hook source_file="lib/managers/menu/menucomponentmanager" file="LoadLastLevelButton.lua"/>
+        <hook source_file="lib/managers/menu/raid_menu/raidmainmenugui" file="RaidMainMenuGui.lua"/>
     </Hooks>
     <Options build_menu="false" early_post_init="true">
         <options>                
@@ -311,8 +311,6 @@
         <value_node value="ElementCustomSound"/>
         <value_node value="ElementExecuteCode"/>
         <value_node value="ElementOverrideInstigator"/>
-	    <value_node value="ElementXAudio"/>
-        <value_node value="ElementXAudioOperator"/>
 	    <value_node value="ElementBLCustomAchievement"/>
         <value_node value="ElementRelativeTeleport"/>
         <value_node value="ElementRelativeTeleportTarget"/>

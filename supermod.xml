@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<mod name="BeardLib-Editor"
+    description="BeardLib-Editor is a mod that uses the amazing library called BeardLib to allow editor-like features!"
+    author="Luffy, ontrigger"
+    blt_version="2.0"
+    image="Assets/textures/editor_logo.png">
+    <hooks>
+        <post hook_id="lib/utils/levelloadingscreenguiscript" script_path="Hooks/EditorLoadingScreen.lua"/>
+        <group hook_id="core/lib/utils/dev/tools/particle_editor/" script_path="Classes/Map/Tools/ParticleEditor/">
+            <post :hook_id="coreparticleeditorpanel" :script_path="ParticleEditorPanel.lua"/>
+            <post :hook_id="coreparticleeditorproperties" :script_path="ParticleEditorProperties.lua"/>
+            <post :hook_id="coreparticleeditoreffect" :script_path="ParticleEditorEffect.lua"/>
+        </group>
+    </hooks>
+</mod>
