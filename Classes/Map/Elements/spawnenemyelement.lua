@@ -11,7 +11,7 @@ EditorSpawnEnemyDummy._enemies = {}
 function EditorSpawnEnemyDummy:create_element()
 	self.super.create_element(self)
 	self._element.class = "ElementSpawnEnemyDummy"
-	self._element.values.enemy = "units/payday2/characters/ene_swat_1/ene_swat_1"
+	self._element.values.enemy = "units/vanilla/characters/enemies/models/german_grunt_light/german_grunt_light"
 	self._element.values.force_pickup = "none"
 	self._element.values.spawn_action = "none"
 	self._element.values.participate_to_group_ai = true
@@ -26,7 +26,18 @@ function EditorSpawnEnemyDummy:destroy()
 	self:stop_test_element()
 end
 
-function EditorSpawnEnemyDummy:test_element(loop) 
+function EditorSpawnEnemyDummy:_get_enemy()
+	local enemy_name = self._element.values.enemy or self._enemy_name
+	enemy_name = enemy_name or "german_flamer"
+
+	if EnemyManager.ENEMIES[enemy_name] then
+		return Idstring(EnemyManager.ENEMIES[enemy_name])
+	else
+		return Idstring(enemy_name)
+	end
+end
+
+function EditorSpawnEnemyDummy:test_element(loop)
 	if not managers.navigation:is_data_ready() then
 		BLE.Utils:Notify(
             "ERROR!",
@@ -42,7 +53,8 @@ function EditorSpawnEnemyDummy:test_element(loop)
 	if self._element.values.enemy ~= "none" and managers.groupai:state():is_AI_enabled() then
 		self:stop_test_element(loop)
 
-		local unit = safe_spawn_unit(Idstring(self._element.values.enemy), self._unit:position(), self._unit:rotation())
+		local enemy_name = self:_get_enemy()
+		local unit = safe_spawn_unit(enemy_name, self._unit:position(), self._unit:rotation())
 		if not unit then
 			return
 		end
@@ -70,27 +82,27 @@ end
 
 function EditorSpawnEnemyDummy:_build_panel()
 	self:_create_panel()
-	self:PathCtrl("enemy", "unit", "/ene_", BLE.Utils.EnemyBlacklist, {
+	self:PathCtrl("enemy", "unit", "/vanilla/characters/enemies/models/", BLE.Utils.EnemyBlacklist, {
 		extra_info = {load = true}
 	})
 	self:BooleanCtrl("participate_to_group_ai")
 	local spawn_action_options = clone(CopActionAct._act_redirects.enemy_spawn)
 	table.insert(spawn_action_options, "none")
 	self:ComboCtrl("spawn_action", spawn_action_options, {
-		not_close = true, 
-        searchbox = true, 
-        fit_text = true, 
-        on_callback = function(item) 
+		not_close = true,
+        searchbox = true,
+        fit_text = true,
+        on_callback = function(item)
             self:set_element_data(item)
             self:test_element(item)
-        end, 
+        end,
         close_callback = ClassClbk(self, "stop_test_element")
 	})
 	self:NumberCtrl("interval", {floats = 2, min = 0, help = "Used to specify how often this spawn can be used. 0 means no interval"})
 	self:NumberCtrl("voice", {
 		floats = 0,
 		min = 0,
-		max = 5, 
+		max = 5,
 		text = "Voice variant",
 		help = "1-5. 0 for random"
 	})
